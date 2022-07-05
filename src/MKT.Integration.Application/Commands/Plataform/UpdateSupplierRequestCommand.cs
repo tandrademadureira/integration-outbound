@@ -18,25 +18,25 @@ namespace MKT.Integration.Application.Commands.Plataform
 
         public class Handler : BaseHandler<UpdateSupplierRequestContract, Result>
         {
-            private readonly ISmarketsIntegration _smarketsIntegration;
+            private readonly IMktIntegration _mktIntegration;
             private readonly IConfiguration _configuration;
 
-            public Handler(ISmarketsIntegration smarketsIntegration, IConfiguration configuration)
+            public Handler(IMktIntegration mktIntegration, IConfiguration configuration)
             {
-                _smarketsIntegration = smarketsIntegration;
+                _mktIntegration = mktIntegration;
                 _configuration = configuration;
             }
 
             public override async Task<Result> Handle(UpdateSupplierRequestContract request, CancellationToken cancellationToken)
             {
-                var tokenResult = await _smarketsIntegration.GetToken(new GetTokenRequest
+                var tokenResult = await _mktIntegration.GetToken(new GetTokenRequest
                 {
                     Identificador = _configuration.GetSection("Platform:User:Identifier").Value,
                     Senha = _configuration.GetSection("Platform:User:Password").Value,
                     IdTenant = long.Parse(_configuration.GetSection("Platform:User:IdTenant").Value)
                 });
 
-                await _smarketsIntegration.UpdateIntegrationId(request.IdSupplierRequest,
+                await _mktIntegration.UpdateIntegrationId(request.IdSupplierRequest,
                                                                 new UpdateSolicitacaoFornecedorIdIntegracaoServiceDeskRequest { NumRequisicaoSistemaChamado = request.IdIntegrationServiceDesk },
                                                                 $"Bearer {tokenResult.token}");
                 return Result.Ok();

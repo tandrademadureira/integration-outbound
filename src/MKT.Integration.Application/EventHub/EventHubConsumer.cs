@@ -60,57 +60,17 @@ namespace MKT.Integration.Application.EventHub
                     EventObject<object> eventObjHheader = Newtonsoft.Json.JsonConvert.DeserializeObject<EventObject<object>>(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
                     string assumir = eventObjHheader.Headers["ToAssume"];
 
-                    if (assumir == "True")
-                    {
-                        _logger.LogInformation(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
-                        EventObject<SolicitacaoFornecedorDto> objEventObj = Newtonsoft.Json.JsonConvert.DeserializeObject<EventObject<SolicitacaoFornecedorDto>>(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
 
-                        var inProgressRequest = new InProgressServiceNowCommand.InProgressServiceNowContract { solicitacaoFornecedor = objEventObj.Object };
-                        await _mediator.Send(inProgressRequest);
-                    }
-                    else
-                    {
-                        _logger.LogInformation(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
-                        EventObject<SolicitacaoFornecedorDto> eventObj = Newtonsoft.Json.JsonConvert.DeserializeObject<EventObject<SolicitacaoFornecedorDto>>(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
+                    _logger.LogInformation(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
+                    EventObject<SolicitacaoFornecedorDto> eventObj = Newtonsoft.Json.JsonConvert.DeserializeObject<EventObject<SolicitacaoFornecedorDto>>(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
 
-                        switch (eventObj.Object.Status)
-                        {
-                            case SolicitacaoFornecedorDto.StatusSolicitacaoFornecedor.Solicitado:
-                                if (string.IsNullOrWhiteSpace(eventObj.Object.IdIntegracaoSistemaChamado))
-                                {
-                                    var createRequest = new CreateServiceNowCommand.CreateServiceNowContract();
-                                    createRequest.solicitacaoFornecedor = eventObj.Object;
-                                    foreach (KeyValuePair<string, string> item in eventObj.Headers)
-                                    {
-                                        createRequest.AddHeader(item.Key, item.Value);
-                                    }
-                                    await _mediator.Send(createRequest);
-                                }
-                                else
-                                {
-                                    var inProgressRequest = new InProgressServiceNowCommand.InProgressServiceNowContract();
-                                    inProgressRequest.solicitacaoFornecedor = eventObj.Object;
-                                    await _mediator.Send(inProgressRequest);
-                                }
-                                break;
-                            case SolicitacaoFornecedorDto.StatusSolicitacaoFornecedor.Reprovado:
-                                var waitInformationRequest = new WaitInformaticonServiceNowCommand.WaitInformaticonServiceNowContract();
-                                waitInformationRequest.solicitacaoFornecedor = eventObj.Object;
-                                await _mediator.Send(waitInformationRequest);
-                                break;
-                            case SolicitacaoFornecedorDto.StatusSolicitacaoFornecedor.Cancelado:
-                                var cancelRequest = new CancelServiceNowCommand.CancelServiceNowContract();
-                                cancelRequest.solicitacaoFornecedor = eventObj.Object;
-                                await _mediator.Send(cancelRequest);
-                                break;
-                            case SolicitacaoFornecedorDto.StatusSolicitacaoFornecedor.AguardandoIntegracao:
-                                var aproveRequest = new AproveServiceNowCommand.AproveServiceNowContract();
-                                aproveRequest.solicitacaoFornecedor = eventObj.Object;
-                                await _mediator.Send(aproveRequest);
-                                break;
-                            default:
-                                break;
-                        }
+                    switch (eventObj.Object.Status)
+                    {
+                        case SolicitacaoFornecedorDto.StatusSolicitacaoFornecedor.Reprovado:
+                            var waitInformationRequest = new WaitInformaticonServiceNowCommand.WaitInformaticonServiceNowContract();
+                            waitInformationRequest.solicitacaoFornecedor = eventObj.Object;
+                            await _mediator.Send(waitInformationRequest);
+                            break;
                     }
                 }
                 catch (Exception ex) { _logger.LogError(ex, ex.Message); }

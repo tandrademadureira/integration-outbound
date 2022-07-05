@@ -17,9 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MKT.Integration.Infra\MKT.Integration.Infra.csproj" />
     <ProjectReference Include="..\Shared\src\Shared.Infra\Shared.Infra.csproj" />
     <ProjectReference Include="..\Shared\src\Shared.Util\Shared.Util.csproj" />
-    <ProjectReference Include="..\Smarkets.Integration.Infra\Smarkets.Integration.Infra.csproj" />
   </ItemGroup>
 
 </Project>
