@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Base\" />
+    <Folder Include="Commands\S4H\" />
+    <Folder Include="Contracts\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\src\Shared.Infra\Shared.Infra.csproj" />
+    <ProjectReference Include="..\Shared\src\Shared.Util\Shared.Util.csproj" />
+    <ProjectReference Include="..\Smarkets.Integration.Infra\Smarkets.Integration.Infra.csproj" />
+  </ItemGroup>
+
+</Project>

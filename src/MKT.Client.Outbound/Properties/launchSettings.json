@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "MKT.Client.Outbound": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Client": "Ultra"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
