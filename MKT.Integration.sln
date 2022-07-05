@@ -1,21 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31424.327
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. src", "1. src", "{459EBD47-1F0B-4BB2-B585-B65C64D11440}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smarkets.Integration.Application", "src\Smarkets.Integration.Application\Smarkets.Integration.Application.csproj", "{56ABC0F4-5D81-4E55-A3D1-B7D116A5B130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKT.Integration.Application", "src\MKT.Integration.Application\MKT.Integration.Application.csproj", "{56ABC0F4-5D81-4E55-A3D1-B7D116A5B130}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smarkets.Integration.Domain", "src\Smarkets.Integration.Domain\Smarkets.Integration.Domain.csproj", "{6233B40E-6518-4CD3-9948-67A9E7028F4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKT.Integration.Domain", "src\MKT.Integration.Domain\MKT.Integration.Domain.csproj", "{6233B40E-6518-4CD3-9948-67A9E7028F4B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smarkets.Integration.Infra", "src\Smarkets.Integration.Infra\Smarkets.Integration.Infra.csproj", "{8EC08C28-2F92-4682-8109-4D41622A77D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKT.Integration.Infra", "src\MKT.Integration.Infra\MKT.Integration.Infra.csproj", "{8EC08C28-2F92-4682-8109-4D41622A77D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. tests", "2. tests", "{87C24B9D-FB08-4B0B-AC52-D2D9CE5F6594}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smarkets.UnitTest", "test\Smarkets.UnitTest\Smarkets.UnitTest.csproj", "{018F7D80-AFE3-4B2E-A82D-52066DE8D044}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smarkets.Client.Outbound", "src\Smarkets.Client.Outbound\Smarkets.Client.Outbound.csproj", "{0ADAD5B8-3F22-4DB5-8F14-CA6A193B6BCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MKT.Client.Outbound", "src\MKT.Client.Outbound\MKT.Client.Outbound.csproj", "{0ADAD5B8-3F22-4DB5-8F14-CA6A193B6BCA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. solution items", "3. solution items", "{7AE41FD7-6DB8-4C22-8D9C-9EABD73D1A7E}"
 	ProjectSection(SolutionItems) = preProject
@@ -50,10 +48,6 @@ Global
 		{8EC08C28-2F92-4682-8109-4D41622A77D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EC08C28-2F92-4682-8109-4D41622A77D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EC08C28-2F92-4682-8109-4D41622A77D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{018F7D80-AFE3-4B2E-A82D-52066DE8D044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{018F7D80-AFE3-4B2E-A82D-52066DE8D044}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{018F7D80-AFE3-4B2E-A82D-52066DE8D044}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{018F7D80-AFE3-4B2E-A82D-52066DE8D044}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0ADAD5B8-3F22-4DB5-8F14-CA6A193B6BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0ADAD5B8-3F22-4DB5-8F14-CA6A193B6BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ADAD5B8-3F22-4DB5-8F14-CA6A193B6BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -82,7 +76,6 @@ Global
 		{56ABC0F4-5D81-4E55-A3D1-B7D116A5B130} = {459EBD47-1F0B-4BB2-B585-B65C64D11440}
 		{6233B40E-6518-4CD3-9948-67A9E7028F4B} = {459EBD47-1F0B-4BB2-B585-B65C64D11440}
 		{8EC08C28-2F92-4682-8109-4D41622A77D1} = {459EBD47-1F0B-4BB2-B585-B65C64D11440}
-		{018F7D80-AFE3-4B2E-A82D-52066DE8D044} = {87C24B9D-FB08-4B0B-AC52-D2D9CE5F6594}
 		{0ADAD5B8-3F22-4DB5-8F14-CA6A193B6BCA} = {459EBD47-1F0B-4BB2-B585-B65C64D11440}
 		{F947DAFA-8697-4EFB-A8E7-57CA690ED4FE} = {459EBD47-1F0B-4BB2-B585-B65C64D11440}
 		{2E9EF85A-E1CE-4292-B0E1-E787694BD656} = {F947DAFA-8697-4EFB-A8E7-57CA690ED4FE}

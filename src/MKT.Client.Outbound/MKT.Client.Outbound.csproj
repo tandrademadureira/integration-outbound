@@ -36,8 +36,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Smarkets.Integration.Application\Smarkets.Integration.Application.csproj" />
-    <ProjectReference Include="..\Smarkets.Integration.Infra\Smarkets.Integration.Infra.csproj" />
+    <ProjectReference Include="..\MKT.Integration.Application\MKT.Integration.Application.csproj" />
+    <ProjectReference Include="..\MKT.Integration.Infra\MKT.Integration.Infra.csproj" />
   </ItemGroup>
 
 </Project>

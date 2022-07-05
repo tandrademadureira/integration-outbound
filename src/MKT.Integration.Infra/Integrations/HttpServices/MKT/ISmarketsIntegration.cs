@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MKT.Integration.Infra.Integrations.HttpServices.MKT
 {
-    public interface ISmarketsIntegration
+    public interface IMktIntegration
     {
         [Post("/api/autenticacoes")]
         Task<GetTokenResponse> GetToken(GetTokenRequest model);

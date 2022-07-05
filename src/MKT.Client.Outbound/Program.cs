@@ -7,7 +7,6 @@ using Serilog;
 using Shared.Infra.Event.EventConsumer.EventHubConsumer;
 using MKT.Integration.Application.EventHub;
 using MKT.Integration.Infra.Integrations.HttpServices.Sap4Hana;
-using MKT.Integration.Infra.Integrations.HttpServices.ServiceDesk;
 using MKT.Integration.Infra.Integrations.HttpServices.MKT;
 using System;
 
@@ -61,17 +60,13 @@ namespace MKT.Client.Outbound
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration.GetValue<string>($"{configuration.GetValue<string>("CompanyImage")}:Erp:BaseUrl")));
 
             services
-                .AddRefitClient<IServiceNowIntegration>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration.GetValue<string>($"{configuration.GetValue<string>("CompanyImage")}:CustomerService:BaseUrl")));
-
-            services
-                .AddRefitClient<ISmarketsIntegration>()
+                .AddRefitClient<IMktIntegration>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration.GetValue<string>("Platform:BaseUrl")));
 
             services.AddSingleton<IConfiguration>(configuration);
             services.AddScoped<IEventHubConsume, EventHubConsumer>();
 
-            var assembly = AppDomain.CurrentDomain.Load("Smarkets.Integration.Application");
+            var assembly = AppDomain.CurrentDomain.Load("Mkt.Integration.Application");
             services.AddMediatR(assembly);
 
             services.AddLogging(builder =>
