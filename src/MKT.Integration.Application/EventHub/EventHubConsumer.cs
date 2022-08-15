@@ -61,8 +61,7 @@ namespace MKT.Integration.Application.EventHub
                         JsonConvert.DeserializeObject<CatalogDto>(Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
 
                     //todo: eFETUAR INTEGRAÇÃO COM O erp
-                    //var inProgressRequest = new UpdateCatalogCommand.UpdateCatalogContract {  Id = objEventObj.Id };
-                    //await _mediator.Send(inProgressRequest);
+                    Console.WriteLine("\tReceived event: {0}", Encoding.UTF8.GetString(arg.Data.Body.ToArray()));
                 }
                 catch (Exception ex) { _logger.LogError(ex, ex.Message); }
                 finally
