@@ -6,9 +6,14 @@ using Refit;
 using Serilog;
 using Shared.Infra.Event.EventConsumer.EventHubConsumer;
 using MKT.Integration.Application.EventHub;
-using MKT.Integration.Infra.Integrations.HttpServices.Sap4Hana;
-using MKT.Integration.Infra.Integrations.HttpServices.MKT;
 using System;
+using Microsoft.Azure.Services.AppAuthentication;
+using Microsoft.Azure.KeyVault;
+using Microsoft.Extensions.Configuration.AzureKeyVault;
+using MKT.Integration.Infra.UnitOfWork;
+using MKT.Integration.Infra.Data.Repositories;
+using MKT.Integration.Infra.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace MKT.Client.Outbound
 {
@@ -30,49 +35,61 @@ namespace MKT.Client.Outbound
             Serilog.Debugging.SelfLog.Enable(msg => System.Diagnostics.Debug.WriteLine(msg));
 
             return Host.CreateDefaultBuilder(args)
-                    .ConfigureServices((hostContext, services) =>
-                    {
-                        ConfigureServices(services);
-                        services.AddHostedService<Worker>();
-                    });
+                 .ConfigureAppConfiguration((context, config) =>
+                 {
+                     var settings = config.Build();
+
+
+                     var keyVaultEndpoint = settings["VaultURI"];
+
+                     if (!string.IsNullOrEmpty(keyVaultEndpoint))
+                     {
+                         var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                         var keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+                         config.AddAzureKeyVault(keyVaultEndpoint, keyVaultClient, new DefaultKeyVaultSecretManager());
+                     }
+                 })
+                .ConfigureServices((hostContext, services) =>
+                {
+                    ConfigureServices(services);
+                    services.AddHostedService<Worker>();
+                });
         }
 
         private static IConfiguration GetConfiguration()
         {
-            var configAppSettings = new ConfigurationBuilder().AddJsonFile("appsettings.json")
+            return new ConfigurationBuilder().AddJsonFile("appsettings.json")
                 .AddEnvironmentVariables()
                 .Build();
-
-            var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").AddAzureKeyVault(configAppSettings["AzureKeyVault:DNS"],
-                            configAppSettings["AzureKeyVault:ClientId"],
-                            configAppSettings["AzureKeyVault:ClientSecret"])
-                            .AddEnvironmentVariables();
-
-            return config.Build();
         }
 
         private static void ConfigureServices(IServiceCollection services)
         {
             var configuration = GetConfiguration();
 
-            services
-                .AddRefitClient<ISap4HaneIntegration>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration.GetValue<string>($"{configuration.GetValue<string>("CompanyImage")}:Erp:BaseUrl")));
-
-            services
-                .AddRefitClient<IMktIntegration>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration.GetValue<string>("Platform:BaseUrl")));
-
-            services.AddSingleton<IConfiguration>(configuration);
+            services.AddSingleton(configuration);
             services.AddScoped<IEventHubConsume, EventHubConsumer>();
 
             var assembly = AppDomain.CurrentDomain.Load("Mkt.Integration.Application");
             services.AddMediatR(assembly);
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+
             services.AddLogging(builder =>
             {
                 builder.AddSerilog(logger: CreateSerilogLogger(GetConfiguration()), dispose: true);
             });
+
+            services.AddDbContext<DbContextCatalog>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionConfiguration"),
+                sqlServerOptionsAction: sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 3,
+                    maxRetryDelay: TimeSpan.FromSeconds(3),
+                    errorNumbersToAdd: null);
+                }));
         }
 
         private static Serilog.ILogger CreateSerilogLogger(IConfiguration configuration)

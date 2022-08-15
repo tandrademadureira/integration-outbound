@@ -5,19 +5,31 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Contexts\" />
-    <Folder Include="Data\Mappings\" />
-    <Folder Include="Data\Repositories\" />
-    <Folder Include="Integrations\HttpServices\Sap4Hana\Contracts\" />
-    <Folder Include="Integrations\QueueServices\" />
+    <Compile Remove="Integrations\QueueServices\**" />
+    <EmbeddedResource Remove="Integrations\QueueServices\**" />
+    <None Remove="Integrations\QueueServices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Integrations\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.EventHubs" Version="5.6.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Refit.HttpClientFactory" Version="6.1.15" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MKT.Integration.Domain\MKT.Integration.Domain.csproj" />
     <ProjectReference Include="..\Shared\src\Shared.Infra\Shared.Infra.csproj" />
   </ItemGroup>
 

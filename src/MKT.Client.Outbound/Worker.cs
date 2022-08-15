@@ -31,6 +31,7 @@ namespace MKT.Client.Outbound
                 Console.WriteLine($"Worker running at: {DateTimeOffset.Now}");
 
                 await Task.Delay(TimeSpan.FromSeconds(10));
+                await _eventHubConsume.StartProcessingAsync();
             }
 
             await _eventHubConsume.StopProcessingAsync();

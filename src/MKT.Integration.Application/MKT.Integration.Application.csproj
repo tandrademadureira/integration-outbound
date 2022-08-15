@@ -5,10 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Base\" />
-    <Folder Include="Commands\S4H\" />
-    <Folder Include="Contracts\" />
-    <Folder Include="Queries\" />
+    <Compile Remove="Base\**" />
+    <Compile Remove="Commands\S4H\**" />
+    <Compile Remove="Contracts\**" />
+    <Compile Remove="Queries\**" />
+    <EmbeddedResource Remove="Base\**" />
+    <EmbeddedResource Remove="Commands\S4H\**" />
+    <EmbeddedResource Remove="Contracts\**" />
+    <EmbeddedResource Remove="Queries\**" />
+    <None Remove="Base\**" />
+    <None Remove="Commands\S4H\**" />
+    <None Remove="Contracts\**" />
+    <None Remove="Queries\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +28,10 @@
     <ProjectReference Include="..\MKT.Integration.Infra\MKT.Integration.Infra.csproj" />
     <ProjectReference Include="..\Shared\src\Shared.Infra\Shared.Infra.csproj" />
     <ProjectReference Include="..\Shared\src\Shared.Util\Shared.Util.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
 
 </Project>
